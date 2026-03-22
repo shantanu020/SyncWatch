@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Vaultroom — Watch movies, stream music, video call, and chat together with zero latency and full end-to-end encryption. Free forever.">
+<title>Vaultroom — Watch. Listen. Connect.</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/landing.css">
+<link rel="stylesheet" href="css/modals.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<!-- AMBIENT BG -->
+<div class="cine-bg">
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+  <div class="orb orb-c"></div>
+</div>
+
+<!-- TOAST STACK -->
+<div class="toast-stack" id="toastStack"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a class="logo" href="index.html">
+    <div class="logo-mark">V</div>
+    VAULT<span>ROOM</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#rooms">Live Rooms</a></li>
+    <li><a href="#security">Security</a></li>
+  </ul>
+  <div class="nav-cta">
+    <button class="btn btn-ghost btn-sm" id="btnJoinNav">Join Room</button>
+    <button class="btn btn-gold btn-sm" id="btnCreateNav">+ Create Room</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-eyebrow">
+    <span class="live-dot"></span>
+    Zero Latency · End-to-End Encrypted · Always Free
+  </div>
+  <h1 class="hero-title">
+    VAULT<span class="accent">ROOM</span>
+    <span class="line2">WATCH · LISTEN · CONNECT</span>
+  </h1>
+  <p class="hero-sub">
+    One private room. <strong>Movies, music, live video, and voice calls</strong> — all synchronized
+    to the frame, all encrypted end-to-end. Invite with a link. No account. No latency.
+  </p>
+  <div class="hero-actions">
+    <button class="btn btn-gold btn-xl" id="btnCreateHero">▶&nbsp;&nbsp;Create a Room</button>
+    <button class="btn btn-ghost btn-xl" id="btnJoinHero">Join with Code</button>
+  </div>
+
+  <!-- BROWSER MOCKUP -->
+  <div class="hero-mockup" aria-hidden="true">
+    <div class="mock-chrome">
+      <div class="mock-dots">
+        <span style="background:#ff5f57"></span>
+        <span style="background:#febc2e"></span>
+        <span style="background:#28c840"></span>
+      </div>
+      <div class="mock-url">
+        <span class="lock-icon">🔒</span>
+        vaultroom.app/r/<strong>XK9-4P2</strong>
+        <span class="enc-badge">● ENCRYPTED</span>
+      </div>
+      <div class="sync-pill"><span class="sync-dot"></span>6 SYNCED</div>
+    </div>
+    <div class="mock-body">
+      <div class="mock-video">
+        <div class="mock-video-bg"></div>
+        <div class="mock-scanlines"></div>
+        <div class="mock-film">
+          <h3>INTERSTELLAR</h3>
+          <p>Christopher Nolan · 2014</p>
+          <div class="mock-play-btn">▶</div>
+        </div>
+      </div>
+      <div class="mock-sidebar">
+        <div class="mock-sidebar-tabs">
+          <span class="mst active">Chat</span>
+          <span class="mst">Viewers</span>
+          <span class="mst">Queue</span>
+        </div>
+        <div class="mock-chat">
+          <div class="mc-msg">
+            <div class="mc-av" style="background:rgba(232,201,126,0.15);color:#e8c97e">A</div>
+            <div><div class="mc-name" style="color:#e8c97e">Alex</div><div class="mc-text">that wormhole scene 🤯</div></div>
+          </div>
+          <div class="mc-msg">
+            <div class="mc-av" style="background:rgba(29,233,182,0.12);color:#1de9b6">M</div>
+            <div><div class="mc-name" style="color:#1de9b6">Maya</div><div class="mc-text">HANS ZIMMER 😭😭</div></div>
+          </div>
+          <div class="mc-msg">
+            <div class="mc-av" style="background:rgba(34,211,238,0.1);color:#22d3ee">J</div>
+            <div><div class="mc-name" style="color:#22d3ee">Jess</div><div class="mc-text">pause I need a minute 😂</div></div>
+          </div>
+          <div class="typing-row">
+            <span class="tdot"></span><span class="tdot"></span><span class="tdot"></span>
+            <span class="typing-label">Alex is typing...</span>
+          </div>
+        </div>
+        <div class="mock-vcall-strip">
+          <div class="mvc-tile" style="background:rgba(232,201,126,0.05)">🎥<span>Alex</span></div>
+          <div class="mvc-tile" style="background:rgba(29,233,182,0.04)">🎥<span>Maya</span></div>
+          <div class="mvc-tile" style="background:rgba(34,211,238,0.04)">🎥<span>Jess</span></div>
+        </div>
+        <div class="mock-bottom">
+          <span class="mc">⏮</span>
+          <span class="mc" style="color:#e8c97e">⏸</span>
+          <span class="mc">⏭</span>
+          <div class="mock-prog"><div class="mock-prog-fill"></div></div>
+          <span class="mc-time">1:23:47</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-cell"><div class="stat-num">&lt;1ms</div><div class="stat-lab">Sync Latency</div></div>
+  <div class="stat-cell"><div class="stat-num">E2E</div><div class="stat-lab">Encrypted</div></div>
+  <div class="stat-cell"><div class="stat-num">6+</div><div class="stat-lab">Media Types</div></div>
+  <div class="stat-cell"><div class="stat-num">∞</div><div class="stat-lab">Room Size</div></div>
+  <div class="stat-cell"><div class="stat-num">FREE</div><div class="stat-lab">Forever</div></div>
+</div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="section-eyebrow">// CAPABILITIES</div>
+  <h2 class="section-h">EVERYTHING.<br>ONE ROOM.</h2>
+  <p class="section-p">Movies, live streams, music, video calls — all synchronized in real-time with zero drift and zero compromise on privacy.</p>
+  <div class="feat-grid">
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(232,201,126,0.1);color:#e8c97e">🎬</div>
+      <span class="feat-num">01</span>
+      <h3>Watch Together</h3>
+      <p>Frame-perfect sync across all viewers. YouTube, Vimeo, direct MP4 links — anything plays. Everyone sees the same frame.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(29,233,182,0.09);color:#1de9b6">🎵</div>
+      <span class="feat-num">02</span>
+      <h3>Music Streaming</h3>
+      <p>Stream audio with a live visualizer. Queue playlists, SoundCloud, YouTube Music, or direct MP3s. DJ your own session.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(34,211,238,0.08);color:#22d3ee">📹</div>
+      <span class="feat-num">03</span>
+      <h3>Video Calls</h3>
+      <p>WebRTC-powered face-to-face calling. See reactions in real time. Toggle camera and mic. Watch movies while on call.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(232,68,90,0.1);color:#ff6b7a">💬</div>
+      <span class="feat-num">04</span>
+      <h3>Live Chat + Reactions</h3>
+      <p>Emoji reactions that float over the screen. Persistent chat with avatars. Typing indicators. The energy of being there.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(232,201,126,0.08);color:#e8c97e">🔒</div>
+      <span class="feat-num">05</span>
+      <h3>Full Privacy</h3>
+      <p>End-to-end encrypted via WebRTC. No accounts. No tracking. No ads. No server ever sees your content unencrypted.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:rgba(29,233,182,0.08);color:#1de9b6">🔗</div>
+      <span class="feat-num">06</span>
+      <h3>Invite by Link</h3>
+      <p>One link. Anyone with it joins instantly. Optional password protection. Works on any browser, any device.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY SECTION -->
+<section class="security-section" id="security">
+  <div class="sec-content">
+    <div class="section-eyebrow">// PRIVACY FIRST</div>
+    <h2 class="section-h">BUILT FOR<br><span style="color:#1de9b6">TRUST.</span></h2>
+    <p class="section-p">Every byte of data flowing through Vaultroom is protected by military-grade encryption.</p>
+    <div class="sec-pillars">
+      <div class="sec-pillar">
+        <div class="sec-icon">🔐</div>
+        <h4>TLS 1.3 + DTLS</h4>
+        <p>All signaling and media encrypted in transit using the latest protocols.</p>
+      </div>
+      <div class="sec-pillar">
+        <div class="sec-icon">🛡️</div>
+        <h4>Zero Knowledge</h4>
+        <p>Our servers never see your content. Rooms are peer-to-peer when possible.</p>
+      </div>
+      <div class="sec-pillar">
+        <div class="sec-icon">👻</div>
+        <h4>Ephemeral Rooms</h4>
+        <p>Rooms vanish when empty. No logs. No history. No trace left behind.</p>
+      </div>
+      <div class="sec-pillar">
+        <div class="sec-icon">🚫</div>
+        <h4>No Tracking</h4>
+        <p>No cookies, no fingerprinting, no analytics. Your sessions are yours alone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLIC ROOMS -->
+<section class="section" id="rooms">
+  <div class="section-eyebrow">// LIVE NOW</div>
+  <h2 class="section-h">PUBLIC ROOMS</h2>
+  <div class="rooms-grid" id="publicRoomsGrid"></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-logo">VAULTROOM</div>
+    <div class="footer-sub">© 2025 · Free · Open Source · Zero Tracking</div>
+    <div class="footer-badges">
+      <span>🔒 TLS 1.3</span>
+      <span>🛡️ No tracking</span>
+      <span>✓ Open source</span>
+    </div>
+  </div>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Security</a>
+    <a href="#">GitHub</a>
+    <a href="#">Docs</a>
+    <a href="#">Status</a>
+  </div>
+</footer>
+
+<!-- MODALS -->
+<div class="modal-backdrop" id="modal-create">
+  <div class="modal">
+    <div class="modal-accent-bar"></div>
+    <div class="modal-inner">
+      <button class="modal-close" data-modal="create">✕</button>
+      <h2>CREATE ROOM</h2>
+      <p class="modal-sub">Your room is ready in seconds. No account needed.</p>
+      <div class="type-picker" id="createTypePicker">
+        <button class="type-btn sel" data-type="private"><span class="ticon">🔒</span>Private</button>
+        <button class="type-btn" data-type="public"><span class="ticon">🌐</span>Public</button>
+        <button class="type-btn" data-type="friends"><span class="ticon">👥</span>Friends</button>
+      </div>
+      <label class="form-label">Room Name</label>
+      <input class="form-inp" id="c-name" placeholder="Friday Movie Night...">
+      <label class="form-label">Your Display Name</label>
+      <input class="form-inp" id="c-user" placeholder="How should we call you?">
+      <label class="form-label">Password (optional)</label>
+      <input class="form-inp" type="password" id="c-pass" placeholder="Leave blank for open access">
+      <label class="form-label">Max Viewers</label>
+      <select class="form-select" id="c-max">
+        <option>2</option><option>5</option><option selected>10</option><option>50</option><option>Unlimited</option>
+      </select>
+      <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:22px" id="btnDoCreate">Create Room →</button>
+      <div class="security-note">
+        <span>🔒 E2E Encrypted</span><span class="dot-sep"></span>
+        <span>🚫 No account</span><span class="dot-sep"></span>
+        <span>✓ Free forever</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="modal-join">
+  <div class="modal">
+    <div class="modal-accent-bar"></div>
+    <div class="modal-inner">
+      <button class="modal-close" data-modal="join">✕</button>
+      <h2>JOIN ROOM</h2>
+      <p class="modal-sub">Enter a room code or paste an invite link to join instantly.</p>
+      <label class="form-label">Your Display Name</label>
+      <input class="form-inp" id="j-user" placeholder="How should we call you?">
+      <label class="form-label">Room Code or Invite Link</label>
+      <input class="form-inp" id="j-code" placeholder="XK9-4P2  or  vaultroom.app/r/...">
+      <label class="form-label">Password (if required)</label>
+      <input class="form-inp" type="password" id="j-pass" placeholder="Leave blank if none">
+      <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:22px" id="btnDoJoin">Join Room →</button>
+      <div class="security-note"><span>🔒 Your connection is encrypted end-to-end</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="modal-ready">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-accent-bar"></div>
+    <div class="modal-inner" style="text-align:center">
+      <div style="font-size:52px;margin-bottom:14px">🎉</div>
+      <h2>ROOM READY</h2>
+      <p class="modal-sub">Share this code or link. Your room is live and waiting.</p>
+      <div class="code-label">Room Code</div>
+      <div class="code-box">
+        <div class="code-val" id="readyCode">XK9-4P2</div>
+        <button class="code-copy-btn" id="btnCopyCode">COPY</button>
+      </div>
+      <div class="code-label" style="margin-top:14px">Invite Link</div>
+      <div class="code-box">
+        <div class="code-val" id="readyLink" style="font-size:11px;letter-spacing:0.5px;color:#7a82a0">vaultroom.app/r/XK9-4P2</div>
+        <button class="code-copy-btn" id="btnCopyLink">COPY</button>
+      </div>
+      <button class="btn btn-gold btn-lg" style="width:100%;justify-content:center;margin-top:20px" id="btnEnterRoom">Enter Room →</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/utils.js"></script>
+<script src="js/state.js"></script>
+<script src="js/landing.js"></script>
+</body>
+</html>

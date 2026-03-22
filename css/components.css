@@ -1,0 +1,103 @@
+/* ============================================================
+   COMPONENTS.CSS — Misc shared UI components
+============================================================ */
+
+/* Ensure images don't overflow */
+img { max-width: 100%; height: auto; }
+
+/* Focus ring for accessibility */
+:focus-visible {
+  outline: 2px solid rgba(232,201,126,0.5);
+  outline-offset: 2px;
+}
+
+/* ── Utility classes ─────────────────────────────────────── */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gap-8  { gap: 8px;  }
+.gap-12 { gap: 12px; }
+.gap-16 { gap: 16px; }
+
+/* ── Spinner (used for loading states) ───────────────────── */
+.spinner {
+  width: 20px; height: 20px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Empty state illustration ────────────────────────────── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text3);
+}
+
+.empty-state .empty-icon { font-size: 40px; opacity: 0.3; }
+.empty-state h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); }
+.empty-state p  { font-size: 12px; line-height: 1.6; max-width: 220px; }
+
+/* ── Divider ─────────────────────────────────────────────── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin: 16px 0;
+}
+
+/* ── Pill tag ────────────────────────────────────────────── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 100px;
+}
+
+/* ── Monospace label ─────────────────────────────────────── */
+.mono-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* ── Selection colour ────────────────────────────────────── */
+::selection {
+  background: rgba(232,201,126,0.2);
+  color: var(--text);
+}

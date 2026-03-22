@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vaultroom — Room</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/room.css">
+<link rel="stylesheet" href="css/modals.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body class="room-page">
+
+<!-- TOAST -->
+<div class="toast-stack" id="toastStack"></div>
+
+<!-- NAV (room mode) -->
+<nav id="roomNav">
+  <a class="logo" href="index.html">
+    <div class="logo-mark">V</div>
+    VAULT<span>ROOM</span>
+  </a>
+  <div class="room-nav-center">
+    <div class="room-nav-title" id="navRoomTitle">Loading…</div>
+    <div class="room-nav-pills">
+      <span class="rpill rpill-live"><span class="rdot"></span>LIVE</span>
+      <span class="rpill rpill-enc">🔒 E2E</span>
+      <span class="rpill rpill-viewers" id="navViewerPill">1 VIEWER</span>
+    </div>
+  </div>
+  <div class="room-nav-right">
+    <span id="hostBadge" style="display:none;font-family:var(--mono);font-size:9px;color:var(--gold);background:rgba(232,201,126,0.1);border:1px solid rgba(232,201,126,0.25);padding:3px 8px;border-radius:4px;letter-spacing:1px;">👑 HOST</span>
+    <button class="btn btn-surface btn-sm" id="btnShareRoom">Share 🔗</button>
+    <button class="btn btn-red btn-sm" id="btnLeaveRoom">Leave</button>
+  </div>
+</nav>
+
+<!-- ROOM LAYOUT -->
+<div class="room-layout">
+
+  <!-- LEFT RAIL (mode icons) -->
+  <aside class="left-rail">
+    <button class="rail-btn active" data-mode="watch" title="Watch Together">
+      🎬
+      <span class="rail-tip">Watch</span>
+    </button>
+    <button class="rail-btn" data-mode="music" title="Music">
+      🎵
+      <span class="rail-tip">Music</span>
+    </button>
+    <button class="rail-btn" data-mode="call" title="Video Call">
+      📹
+      <span class="rail-tip">Video Call</span>
+    </button>
+    <div class="rail-divider"></div>
+    <button class="rail-btn" id="railShare" title="Share invite link">
+      🔗
+      <span class="rail-tip">Share</span>
+    </button>
+    <button class="rail-btn" id="railLeave" title="Leave room">
+      ✕
+      <span class="rail-tip">Leave</span>
+    </button>
+  </aside>
+
+  <!-- MAIN STAGE -->
+  <main class="main-stage">
+
+    <!-- PLAYER AREA -->
+    <div class="player-area" id="playerArea">
+
+      <!-- REACTION FLOAT LAYER -->
+      <div class="react-layer" id="reactLayer"></div>
+
+      <!-- EMPTY STATE -->
+      <div class="player-empty" id="playerEmpty">
+        <div class="empty-icon">🎬</div>
+        <h3>NO MEDIA LOADED</h3>
+        <p>Add a URL in the Queue tab to start watching,<br>or switch to Music or Video Call mode.</p>
+        <button class="btn btn-gold" id="btnOpenQueue">Open Queue →</button>
+      </div>
+
+      <!-- PLAYER FRAME -->
+      <div class="player-frame" id="playerFrame" style="display:none;position:absolute;inset:0;"></div>
+
+      <!-- MUSIC VISUALIZER -->
+      <div class="music-viz" id="musicViz" style="display:none">
+        <div class="viz-glow"></div>
+        <div class="viz-disc" id="vizDisc">
+          <div class="viz-disc-inner" id="vizIcon">🎵</div>
+        </div>
+        <div class="viz-track-info" id="vizTrackInfo">
+          <div class="viz-title" id="vizTitle">No track loaded</div>
+          <div class="viz-artist" id="vizArtist">Add a URL to begin</div>
+        </div>
+        <div class="viz-bars" id="vizBars"></div>
+      </div>
+
+      <!-- VIDEO CALL OVERLAY -->
+      <div class="vcall-overlay" id="vcallOverlay" style="display:none">
+        <div class="vcall-grid" id="vcallGrid"></div>
+        <div class="vcall-self-tile">
+          <div class="vcall-self-av">👤</div>
+          <div class="vcall-self-label">You (Camera off)</div>
+        </div>
+        <div class="vcall-controls" id="vcallControls">
+          <button class="vcall-btn" id="vcBtnMic" data-vc="mic" title="Toggle Mic">🎙️</button>
+          <button class="vcall-btn" id="vcBtnCam" data-vc="cam" title="Toggle Camera">📷</button>
+          <button class="vcall-btn danger" data-vc="end" title="End Call">📵</button>
+          <button class="vcall-btn" data-vc="screen" title="Share Screen">🖥️</button>
+          <button class="vcall-btn active" data-vc="back" title="Back to Watch">🎬</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLAYER CONTROLS BAR -->
+    <div class="controls-bar" id="controlsBar">
+      <div class="prog-row">
+        <div class="prog-track" id="progTrack">
+          <div class="prog-fill" id="progFill"></div>
+        </div>
+        <span class="prog-time" id="progTime">0:00 / 0:00</span>
+      </div>
+      <div class="ctrl-row">
+        <button class="ctrl" id="ctrlPrev" title="Previous">⏮</button>
+        <button class="ctrl ctrl-play" id="ctrlPlay" title="Play / Pause">▶</button>
+        <button class="ctrl" id="ctrlNext" title="Next">⏭</button>
+        <div class="vol-row">
+          <span class="vol-icon">🔊</span>
+          <input type="range" class="vol-slider" id="volSlider" min="0" max="100" value="80">
+        </div>
+        <div class="ctrl-right">
+          <div class="sync-badge" id="syncBadge">
+            <span class="sync-dot"></span>ALL SYNCED
+          </div>
+          <button class="ctrl" id="ctrlFullscreen" title="Fullscreen">⛶</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- RIGHT SIDEBAR -->
+  <aside class="right-sidebar">
+
+    <!-- SIDEBAR HEADER -->
+    <div class="sb-header">
+      <div class="sb-header-info">
+        <div class="sb-room-name" id="sbRoomName">Loading…</div>
+        <div class="sb-badges">
+          <span class="badge badge-live"><span class="bdot"></span>LIVE</span>
+          <span class="badge badge-enc">🔒 E2E</span>
+          <span class="badge badge-count" id="sbViewerBadge">1 VIEWER</span>
+        </div>
+      </div>
+      <button class="btn btn-surface btn-sm" id="sbShareBtn">🔗</button>
+    </div>
+
+    <!-- TABS -->
+    <div class="sb-tabs">
+      <button class="sb-tab active" data-tab="chat">CHAT</button>
+      <button class="sb-tab" data-tab="viewers">VIEWERS</button>
+      <button class="sb-tab" data-tab="queue">QUEUE</button>
+    </div>
+
+    <!-- CHAT PANE -->
+    <div class="sb-pane active" id="pane-chat">
+      <div class="chat-scroll" id="chatScroll"></div>
+      <div class="chat-footer">
+        <div class="react-bar">
+          <button class="rbt" data-emoji="🔥">🔥</button>
+          <button class="rbt" data-emoji="😂">😂</button>
+          <button class="rbt" data-emoji="😱">😱</button>
+          <button class="rbt" data-emoji="👏">👏</button>
+          <button class="rbt" data-emoji="❤️">❤️</button>
+          <button class="rbt" data-emoji="💀">💀</button>
+          <button class="rbt" data-emoji="🍿">🍿</button>
+        </div>
+        <div class="chat-input-row">
+          <input class="chat-inp" id="chatInp" placeholder="Message the room…" maxlength="280">
+          <button class="send-btn" id="chatSendBtn">↑</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEWERS PANE -->
+    <div class="sb-pane" id="pane-viewers">
+      <div class="viewers-list" id="viewersList"></div>
+    </div>
+
+    <!-- QUEUE PANE -->
+    <div class="sb-pane" id="pane-queue">
+      <div class="queue-list" id="queueList"></div>
+      <div class="queue-add">
+        <div class="q-section-label">Add to queue</div>
+        <input class="q-inp" id="qUrl" placeholder="YouTube / Vimeo / MP4 / MP3 URL…">
+        <input class="q-inp" id="qTitle" placeholder="Title (optional)">
+        <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:6px" id="btnAddQueue">Add Media</button>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- SHARE MODAL -->
+<div class="modal-backdrop" id="modal-share">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-accent-bar"></div>
+    <div class="modal-inner" style="text-align:center">
+      <button class="modal-close" data-modal="share">✕</button>
+      <div style="font-size:40px;margin-bottom:12px">🔗</div>
+      <h2>INVITE FRIENDS</h2>
+      <p class="modal-sub">Share your room code or link. Anyone with it can join instantly.</p>
+      <div class="code-label">Room Code</div>
+      <div class="code-box">
+        <div class="code-val" id="shareCode">---</div>
+        <button class="code-copy-btn" id="btnShareCopyCode">COPY</button>
+      </div>
+      <div class="code-label" style="margin-top:14px">Invite Link</div>
+      <div class="code-box">
+        <div class="code-val" id="shareLink" style="font-size:11px;letter-spacing:0.5px;color:#7a82a0">---</div>
+        <button class="code-copy-btn" id="btnShareCopyLink">COPY</button>
+      </div>
+      <div class="security-note" style="margin-top:16px"><span>🔒 This link is end-to-end encrypted</span></div>
+    </div>
+  </div>
+</div>
+
+<script src="js/utils.js"></script>
+<script src="js/state.js"></script>
+<script src="js/sync.js"></script>
+<script src="js/room.js"></script>
+<script src="js/player.js"></script>
+<script src="js/chat.js"></script>
+<script src="js/vcall.js"></script>
+<script src="js/queue.js"></script>
+</body>
+</html>
